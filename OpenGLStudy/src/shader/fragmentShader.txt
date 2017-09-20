@@ -1,0 +1,9 @@
+#version 110
+
+// vertex shader에서 값을 전달받음.
+in vec3 vertexColor;
+
+void main()
+{    
+    gl_FragColor = vec4(vertexColor, 1.0);
+}

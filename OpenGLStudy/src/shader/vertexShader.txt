@@ -1,0 +1,15 @@
+// Vertex Shader
+#version 330
+
+// vertex attributes
+in vec3 vertex;
+in vec3 color;
+
+// vertex shader -> fragment shader
+varying vec3 vertexColor;
+
+void main()
+{
+    vertexColor = color;
+    gl_Position = vec4(vertex, 1.0);
+}
