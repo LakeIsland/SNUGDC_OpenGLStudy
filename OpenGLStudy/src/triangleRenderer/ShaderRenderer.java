@@ -23,8 +23,8 @@ public class ShaderRenderer implements TriangleRenderer{
 		// create vbo
 		vertexVBO = Loader.createVBO(vertices);
 		colorVBO = Loader.createVBO(colors);
-				
-		this.shader = new Shader("src/shader/vertexShader.txt", "src/shader/fragmentShader.txt");
+		
+		this.shader = new Shader("res/shaders/triangleVertexShader.txt", "res/shaders/triangleFragmentShader.txt");
 		shader.bindAttribute(0, "vertex");
 		shader.bindAttribute(1, "color");
 		

@@ -44,6 +44,7 @@ public class VBORenderer implements TriangleRenderer {
 		GL11.glColorPointer(3, GL11.GL_FLOAT, 0, 0);
 
 		GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, n);
+		
 		// unbind
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 	}

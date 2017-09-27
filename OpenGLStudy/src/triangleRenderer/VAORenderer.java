@@ -20,7 +20,7 @@ public class VAORenderer implements TriangleRenderer{
 	
 	public VAORenderer(float[] vertices, float[] colors){
 		// enable vertex & color array
-		this.shader = new Shader("src/shader/vertexShader.txt", "src/shader/fragmentShader.txt");
+		this.shader = new Shader("res/shaders/triangleVertexShader.txt", "res/shaders/triangleFragmentShader.txt");
 		shader.bindAttribute(0, "vertex");
 		shader.bindAttribute(1, "color");
 		
