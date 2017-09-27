@@ -1,0 +1,11 @@
+#version 330
+
+// vertex shader에서 값을 전달받음.
+in vec2 passTexCoord;
+
+uniform sampler2D image;
+
+void main()
+{    
+    gl_FragColor = texture(image, passTexCoord);
+}
