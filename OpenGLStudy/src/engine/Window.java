@@ -2,11 +2,16 @@ package engine;
 
 import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWCursorPosCallbackI;
 import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWKeyCallbackI;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.system.MemoryUtil;
+
+import input.KeyboardInput;
+import input.MouseInput;
 
 // this class handles GLFW related things.
 // window, mouse, keybord input.. etc
@@ -54,18 +59,49 @@ public class Window {
 
 		// Setup a key callback. It will be called every time a key is pressed,
 		// repeated or released.
-		GLFW.glfwSetKeyCallback(windowHandle, (window, key, scancode, action, mods) -> {
-			if (key == GLFW.GLFW_KEY_ESCAPE && action == GLFW.GLFW_RELEASE) {
-				GLFW.glfwSetWindowShouldClose(window, true);
-			} else if (key == GLFW.GLFW_KEY_9 && action == GLFW.GLFW_RELEASE) {
-				vSync = !vSync;
-				updatevSync();
-			} else if (key == GLFW.GLFW_KEY_F10 && action == GLFW.GLFW_RELEASE) {
-				isWindowed = !isWindowed;
-				updateScreenWindowFull();
-				
+		
+		GLFWKeyCallbackI keyCallback = new GLFWKeyCallbackI() {
+			@Override
+			public void invoke(long window, int key, int scancode, int action, int mods) {
+				// TODO Auto-generated method stub
+				if (key >= 0 && key < KeyboardInput.KEY_NUMBER) {
+					KeyboardInput.beforeKeys[key] = KeyboardInput.keys[key];
+					if (action == GLFW.GLFW_PRESS) {
+						KeyboardInput.keys[key] = true;
+					} else if (action == GLFW.GLFW_RELEASE) {
+						KeyboardInput.keys[key] = false;
+					}
+				}
 			}
-		});
+		};
+		GLFW.glfwSetKeyCallback(windowHandle, keyCallback);
+		
+		GLFWCursorPosCallbackI cursorPosCallback = new GLFWCursorPosCallbackI() {
+			@Override
+			public void invoke(long window, double xpos, double ypos) {
+				// TODO Auto-generated method stub
+				MouseInput.lastXPos = MouseInput.xPos;
+				MouseInput.lastYPos = MouseInput.yPos;
+				
+				MouseInput.xPos = (float)xpos;
+				MouseInput.yPos = (float)ypos;
+			}
+		};
+		GLFW.glfwSetCursorPosCallback(windowHandle, cursorPosCallback);
+		GLFW.glfwSetInputMode(windowHandle, GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_HIDDEN);  
+		
+		
+//		GLFW.glfwSetKeyCallback(windowHandle, (window, key, scancode, action, mods) -> {
+//			if (key == GLFW.GLFW_KEY_ESCAPE && action == GLFW.GLFW_RELEASE) {
+//				GLFW.glfwSetWindowShouldClose(window, true);
+//			} else if (key == GLFW.GLFW_KEY_9 && action == GLFW.GLFW_RELEASE) {
+//				vSync = !vSync;
+//				updatevSync();
+//			} else if (key == GLFW.GLFW_KEY_F10 && action == GLFW.GLFW_RELEASE) {
+//				isWindowed = !isWindowed;
+//				updateScreenWindowFull();
+//			}
+//		});
 
 		// Make the OpenGL context current
 		GLFW.glfwMakeContextCurrent(windowHandle);
@@ -130,6 +166,7 @@ public class Window {
 	public void update() {
 		GLFW.glfwSwapBuffers(windowHandle);
 		GLFW.glfwPollEvents();
+		keyboardInput();
 	}
 
 	public void updateScreenWindowFull() {
@@ -153,5 +190,23 @@ public class Window {
 	private void makeWindowCentered() {
 		GLFWVidMode vidMode = GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor());
 		GLFW.glfwSetWindowPos(windowHandle, (vidMode.width() - width) / 2, (vidMode.height() - height) / 2);
+	}
+	
+	private void keyboardInput(){
+		if(KeyboardInput.posEdge(GLFW.GLFW_KEY_ESCAPE)){
+			GLFW.glfwSetWindowShouldClose(windowHandle, true);
+		}
+		if(KeyboardInput.posEdge(GLFW.GLFW_KEY_9)){
+			vSync = !vSync;
+			updatevSync();
+		}
+		if(KeyboardInput.posEdge(GLFW.GLFW_KEY_0)){
+			isWindowed = !isWindowed;
+			updateScreenWindowFull();
+		}
+	}
+	
+	public void setCursorCenter(){
+		GLFW.glfwSetCursorPos(windowHandle, width * 0.5f, height * 0.5f);
 	}
 }

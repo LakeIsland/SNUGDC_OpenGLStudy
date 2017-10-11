@@ -35,7 +35,7 @@ public class CubeRenderer {
 	}
 	
 	
-	public void render(CubeData cubeData, Matrix4f projectionMatrix) {
+	public void render(CubeData cubeData, Matrix4f projectionMatrix, Matrix4f viewMatrix) {
 		
 		List<Entity> cubeEntities = cubeData.getCubeEntities();
 		TexturedModel cubeModel = cubeData.getCubeModel();
@@ -45,10 +45,9 @@ public class CubeRenderer {
 
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		cubeData.getCubeModel().getTexture().bind();
-
-		shader.setMatrix4f("viewMatrix", new Matrix4f());
-		shader.setMatrix4f("projectionMatrix", projectionMatrix);
 		
+		shader.setMatrix4f("viewMatrix", viewMatrix);
+		shader.setMatrix4f("projectionMatrix", projectionMatrix);
 		
 		
 		for(Entity cubeEntity : cubeEntities){

@@ -2,11 +2,11 @@
 
 // vertex shader에서 값을 전달받음.
 in vec3 passColor;
-//in vec2 passTexCoord;
+in vec2 passTexCoord;
 
 uniform sampler2D image;
 
 void main()
 {    
-    gl_FragColor = vec4(passColor, 1);
+    gl_FragColor = texture(image, passTexCoord) * vec4(passColor, 1);
 }

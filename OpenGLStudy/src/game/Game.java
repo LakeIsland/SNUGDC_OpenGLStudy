@@ -1,20 +1,35 @@
 package game;
 
+import org.joml.Vector3f;
+
+import camera.Camera;
 import cubeRenderer.CubeData;
 import cubeRenderer.CubeRenderer;
 import engine.IGameLogic;
 import engine.Window;
+import models.Entity;
+import models.RawModel;
+import models.TexturedModel;
 import quadRenderer.QuadRenderer;
+import resourceLoader.OBJLoader;
+import standardRenderer.StandardRenderer;
+import texture.Texture;
+import texture.TextureLoader;
 import triangleRenderer.TriangleRenderer;
 import util.Maths;
 
 public class Game implements IGameLogic {
 
-	public Game() {}
 	private TriangleRenderer triangleRenderer;
 	private QuadRenderer quadRenderer;
 	private CubeRenderer cubeRenderer;
 	private CubeData cubeData;
+	private Camera camera;
+	
+	private StandardRenderer standardRenderer;
+	private Entity testEntity;
+	
+	public Game() {}
 	
 	@Override
 	public void init() {
@@ -31,28 +46,39 @@ public class Game implements IGameLogic {
 		//triangleRenderer = new VAORenderer(data.getVerticeArray(), data.getColorArray());			// 5 - 3.0
 		
 		
-		quadRenderer = new QuadRenderer();
+		//quadRenderer = new QuadRenderer();
 		
-		//cubeData = new CubeData(100);
-		//cubeRenderer = new CubeRenderer();
+		cubeData = new CubeData(100);
+		cubeRenderer = new CubeRenderer();
+		
+		camera = new Camera();
+		
+		standardRenderer = new StandardRenderer();
+		
+		RawModel testMesh = OBJLoader.loadOBJModel("res/mesh/barrel.obj");
+		Texture testTexture = TextureLoader.getNormalRGBTexture("res/texture/barrel.png");
+		TexturedModel testModel = new TexturedModel(testMesh, testTexture);
+		
+		testEntity = new Entity(testModel, new Vector3f(0,0,100), 0, 0, 0, 2);
 	}
 
 	@Override
-	public void processInput(Window window) {
-		// TODO Auto-generated method stub
-
+	public void processInput(Window window, float interval) {
+		camera.processInput(interval);
+		camera.mouseInput(window, interval);
 	}
 
 	@Override
 	public void update(float interval) {
 		// TODO Auto-generated method stub
-		//cubeData.update(interval);
+		cubeData.update(interval);
 	}
 
 	@Override
 	public void render(Window window) {
-		quadRenderer.render();
-		//cubeRenderer.render(cubeData, Maths.getProjectionMatrix(window));
+		//quadRenderer.render();
+		cubeRenderer.render(cubeData, Maths.getProjectionMatrix(window), Maths.getViewMatrix(camera));
+		standardRenderer.render(testEntity, Maths.getProjectionMatrix(window), Maths.getViewMatrix(camera));
 	}
 
 }

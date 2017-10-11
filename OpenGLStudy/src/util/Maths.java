@@ -5,6 +5,7 @@ import java.util.Random;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
+import camera.Camera;
 import engine.Window;
 
 public class Maths {
@@ -25,12 +26,22 @@ public class Maths {
 		return matrix;
 	}
 	
-	
 	public static Matrix4f getProjectionMatrix(Window window){
 		Matrix4f matrix = new Matrix4f();
 		matrix.identity();
 		matrix.perspective((float)Math.toRadians(45), window.getWidth() / (float)window.getHeight(), 1, 1000);
 		return matrix;
+	}
+	
+	public static Matrix4f getViewMatrix(Camera camera){
+		Matrix4f viewMatrix = new Matrix4f();
+		
+		viewMatrix.identity();
+		viewMatrix.rotate((float) Math.toRadians(-camera.getPitch()), X_AXIS);
+		viewMatrix.rotate((float) Math.toRadians(-camera.getYaw()), Y_AXIS);
+		
+		viewMatrix.translate(new Vector3f(camera.getPosition()).negate());
+		return viewMatrix;
 	}
 	
 	private static Random random = new Random();

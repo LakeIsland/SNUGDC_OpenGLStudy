@@ -10,6 +10,7 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
 import models.RawModel;
+import resourceLoader.OBJData;
 
 public class Loader {
 	
@@ -43,20 +44,7 @@ public class Loader {
 		return vaoID;
 	}
 	
-	public static RawModel loadToVao(float[] positions,float[] textureCoords, int[] indices) {
-		// VAO 만들기
-		int vaoID = GL30.glGenVertexArrays();
-		GL30.glBindVertexArray(vaoID);
-		
-		bindIndicesBuffer(indices);
-		
-		storeDataInAttributeList(0, 3, positions);
-		storeDataInAttributeList(1, 2, textureCoords);
-
-		// unbind.
-		GL30.glBindVertexArray(0);
-		return new RawModel(vaoID, indices.length);
-	}
+	
 	
 	public static int loadPosColor(float[] positions,float[] colors, int[] indices) {
 		// VAO 만들기
@@ -87,6 +75,38 @@ public class Loader {
 		// unbind.
 		GL30.glBindVertexArray(0);
 		return vaoID;
+	}
+	
+	public static RawModel loadPosTex(float[] positions,float[] textureCoords, int[] indices) {
+		// VAO 만들기
+		int vaoID = GL30.glGenVertexArrays();
+		GL30.glBindVertexArray(vaoID);
+		
+		bindIndicesBuffer(indices);
+		
+		storeDataInAttributeList(0, 3, positions);
+		storeDataInAttributeList(1, 2, textureCoords);
+
+		// unbind.
+		GL30.glBindVertexArray(0);
+		return new RawModel(vaoID, indices.length);
+	}
+	
+	public static RawModel loadPosTexNorm(float[] positions, float[] textureCoords, float[] normals, int[] indices) {
+		// VAO 만들기
+		int vaoID = GL30.glGenVertexArrays();
+		GL30.glBindVertexArray(vaoID);
+		
+		bindIndicesBuffer(indices);
+		
+		storeDataInAttributeList(0, 3, positions);
+		storeDataInAttributeList(1, 2, textureCoords);
+		storeDataInAttributeList(2, 3, normals);
+
+		// unbind.
+		GL30.glBindVertexArray(0);
+		
+		return new RawModel(vaoID, indices.length);
 	}
 	
 	private static int storeDataInAttributeList(int attributeNumber, int coordinateSize, float[] data) {

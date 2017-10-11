@@ -19,9 +19,9 @@ public class QuadRenderer {
 		
 		shader.bindAttribute(0, "position");
 		shader.bindAttribute(1, "color");
-		//shader.bindAttribute(2, "texCoord");
+		shader.bindAttribute(2, "texCoord");
 		
-		//shader.setInteger("image", 0);
+		shader.setInteger("image", 0);
 		
 		
 		float[] positions = { 0.5f, 0.5f, 0.0f, 0.5f, -0.5f, 0.0f, -0.5f, -0.5f, 0.0f, -0.5f, 0.5f, 0.0f };
@@ -32,21 +32,21 @@ public class QuadRenderer {
 
 		int[] indices = { 0, 1, 3, 1, 2, 3 };
 
-		quad = Loader.loadPosColor(positions, colors, indices);
-		//quad = Loader.loadPosColorTex(positions, colors, texCoords, indices);
-		//quadTexture = TextureLoader.getNormalRGBTexture("res/texture/image.png");
+		//quad = Loader.loadPosColor(positions, colors, indices);
+		quad = Loader.loadPosColorTex(positions, colors, texCoords, indices);
+		quadTexture = TextureLoader.getNormalRGBTexture("res/texture/image.png");
 	}
 
 	public void render() {
 		shader.start();
 		GL30.glBindVertexArray(quad);
 		
-		//GL13.glActiveTexture(GL13.GL_TEXTURE0);
-		//quadTexture.bind();
+		GL13.glActiveTexture(GL13.GL_TEXTURE0);
+		quadTexture.bind();
 		
 		GL11.glDrawElements(GL11.GL_TRIANGLES, 6, GL11.GL_UNSIGNED_INT, 0);
 		
-		//GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
 		GL30.glBindVertexArray(0);
 		shader.stop();
 	}

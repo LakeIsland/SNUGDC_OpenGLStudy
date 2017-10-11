@@ -3,16 +3,16 @@
 // vertex attributes
 layout (location = 0) in vec3 position;
 layout (location = 1) in vec3 color;
-//layout (location = 2) in vec2 texCoord;
+layout (location = 2) in vec2 texCoord;
 
 // vertex shader -> fragment shader
 out vec3 passColor;
-//out vec2 passTexCoord;
+out vec2 passTexCoord;
 
 
 void main()
 {
 	passColor = color;
-    //passTexCoord = texCoord;
+    passTexCoord = texCoord;
     gl_Position = vec4(position, 1.0);
 }

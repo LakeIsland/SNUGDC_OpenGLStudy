@@ -13,7 +13,7 @@ public class Texture {
 	private int height;
 	private int id;
 	
-	Texture(String path, int format, TextureConfig config){
+	public Texture(String path, int format, TextureConfig config){
 		loadTextureFromPath(path, format);
 		createMipMap(config.isUseMipMap());
 		setParameter(config);

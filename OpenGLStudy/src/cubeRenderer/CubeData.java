@@ -9,6 +9,7 @@ import engine.DtUpdatable;
 import models.Entity;
 import models.RawModel;
 import models.TexturedModel;
+import resourceLoader.OBJLoader;
 import texture.Texture;
 import texture.TextureLoader;
 import util.Loader;
@@ -50,8 +51,11 @@ public class CubeData implements DtUpdatable{
 				19, 17, 18, 20, 21, 23, 23, 21, 22
 		};
 		
-		RawModel cubeMesh = Loader.loadToVao(vertices, textureCoords, indices);
+		RawModel cubeMesh = Loader.loadPosTex(vertices, textureCoords, indices);
 		Texture cubeTexture = TextureLoader.getNormalRGBTexture("res/texture/image.png");
+		
+		//RawModel cubeMesh = OBJLoader.loadOBJModel("res/mesh/chocobar_snickers.obj");
+		//Texture cubeTexture = TextureLoader.getNormalRGBTexture("res/texture/chocobar_snickers_d.png");
 		
 		cubeModel = new TexturedModel(cubeMesh, cubeTexture);
 		
