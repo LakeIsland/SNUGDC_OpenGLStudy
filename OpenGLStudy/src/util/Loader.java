@@ -44,7 +44,15 @@ public class Loader {
 		return vaoID;
 	}
 	
-	
+	public static int loadPos(float[] positions, int size) {
+		int vaoID = GL30.glGenVertexArrays();
+		GL30.glBindVertexArray(vaoID);
+		
+		storeDataInAttributeList(0, size, positions);
+		
+		GL30.glBindVertexArray(0);
+		return vaoID;
+	}
 	
 	public static int loadPosColor(float[] positions,float[] colors, int[] indices) {
 		// VAO ¸¸µé±â

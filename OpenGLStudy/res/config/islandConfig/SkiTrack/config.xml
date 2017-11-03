@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<map xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<size>1024</size>
+	<name>Ski Track</name>
+	<minHeight>-7</minHeight>
+	<maxHeight>400</maxHeight>
+	<heightMap>heightMap.png</heightMap>
+	<textureMap>SkiMapTexture.png</textureMap>
+	<hasBlendMap>false</hasBlendMap>
+</map>

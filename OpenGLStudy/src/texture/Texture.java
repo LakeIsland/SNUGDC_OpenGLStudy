@@ -6,6 +6,7 @@ import java.nio.ShortBuffer;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
+import org.lwjgl.opengl.GL31;
 import org.lwjgl.stb.STBImage;
 
 public class Texture {
@@ -50,7 +51,7 @@ public class Texture {
 			GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA8, width,
 					height, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, (ByteBuffer) image);
 		} else if (format == TextureFormat.GRAY_16){
-			GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL30.GL_R16, width,
+			GL11.glTexImage2D(GL31.GL_TEXTURE_RECTANGLE, 0, GL30.GL_R16, width,
 					height, 0, GL11.GL_RED, GL11.GL_UNSIGNED_SHORT, (ShortBuffer)image);
 		} else if (format == TextureFormat.GRAY_8){
 			GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL30.GL_R8, width,

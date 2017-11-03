@@ -1,0 +1,7 @@
+2048
+-9.86
+77.00
+grass1.jpg
+sand.jpg
+rocks1-grey.jpg
+rock1.jpg

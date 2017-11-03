@@ -1,0 +1,31 @@
+#version 400 core
+#define DETAIL_TILE_SIZE_COEFFICIENT 1200;
+
+in vec2 texCoord;
+in float alphaBlendFactor;
+in vec3 totalMapColor;
+in vec3 blendMapColor;
+
+out vec4 out_Color;
+
+uniform sampler2D backgroundTexture;
+uniform sampler2D rTexture;
+uniform sampler2D gTexture;
+uniform sampler2D bTexture;
+
+void main(void){
+	
+	float backTextureAmount = 1 - (blendMapColor.r + blendMapColor.g+ blendMapColor.b);
+	vec2 tiledCoords = texCoord * DETAIL_TILE_SIZE_COEFFICIENT;
+	
+	vec3 backGroundTextureColor = texture(backgroundTexture, tiledCoords).rgb * backTextureAmount;
+	vec3 rTextureColor = texture(rTexture, tiledCoords).rgb * blendMapColor.r;
+	vec3 gTextureColor = texture(gTexture, tiledCoords).rgb * blendMapColor.g;
+	vec3 bTextureColor = texture(bTexture, tiledCoords).rgb * blendMapColor.b;
+	
+	vec3 totalBlendColor = backGroundTextureColor + rTextureColor + gTextureColor + bTextureColor;
+	
+	vec3 color = mix(totalBlendColor, totalMapColor, alphaBlendFactor);
+	
+	out_Color = vec4(color, 1);
+}

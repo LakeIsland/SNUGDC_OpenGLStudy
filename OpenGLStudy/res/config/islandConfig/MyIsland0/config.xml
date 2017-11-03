@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<map xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<size>512</size>
+	<name>Baker Island</name>
+	<minHeight>-57.41</minHeight>
+	<maxHeight>44.98</maxHeight>
+	<heightMap>heightMap.png</heightMap>
+	<textureMap>TotalTexture.png</textureMap>
+	<hasBlendMap>true</hasBlendMap>
+	<diffuse>
+		<background>grass1-lush.jpg</background>
+		<red>rock1.jpg</red>
+		<green>rocks1-grey.jpg</green>
+		<blue>sand.jpg</blue>
+	</diffuse>
+	<normal>
+		<background>detail_normal.jpg</background>
+		<red>sand_normal.jpg</red>
+		<green>rock1_bump.jpg</green>
+		<blue>rock1_bump.jpg</blue>
+	</normal>
+</map>

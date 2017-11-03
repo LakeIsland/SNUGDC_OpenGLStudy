@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<map xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<size>2048</size>
+	<name>Map0</name>
+	<minHeight>-7</minHeight>
+	<maxHeight>400</maxHeight>
+	<heightMap>heightMap.png</heightMap>
+	<textureMap>textureMap.png</textureMap>
+	<hasBlendMap>false</hasBlendMap>
+</map>

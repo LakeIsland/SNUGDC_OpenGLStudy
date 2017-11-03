@@ -1,0 +1,7 @@
+512
+-57.41
+44.98
+grass1-lush.jpg
+rock1.jpg
+rocks1-grey.jpg
+sand.jpg

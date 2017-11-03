@@ -1,0 +1,47 @@
+#version 400 core
+#define MAX_BLEND_DISTANCE 100
+
+layout (location = 0) in vec2 position;
+
+out vec2 texCoord;
+out float alphaBlendFactor;
+out vec3 totalMapColor;
+out vec3 blendMapColor;
+
+uniform mat4 projectionMatrix;
+uniform mat4 viewMatrix;
+
+uniform float scale;
+uniform float heightScale;
+
+uniform float map_size;
+
+uniform vec2 tileOffset;
+uniform vec3 cameraPos;
+
+uniform sampler2DRect heightMap;
+uniform sampler2D totalMapTexture;
+uniform sampler2D blendMap;
+
+uniform float MIN_HEIGHT;
+uniform float RANGE;
+
+void main(void){
+	
+	vec2 pos = (position + tileOffset);
+	ivec2 posInt = ivec2(pos);
+	
+	texCoord = pos / (map_size - 1);
+	
+	float height = texelFetch(heightMap, posInt).r * RANGE + MIN_HEIGHT;
+	
+	vec4 worldPos = vec4(pos.x * scale, height * heightScale * scale, pos.y * scale, 1.0);
+	
+	alphaBlendFactor = clamp(distance(worldPos.xyz, cameraPos)/(MAX_BLEND_DISTANCE), 0, 1);
+	
+	gl_Position = projectionMatrix * viewMatrix  * worldPos;
+	
+	totalMapColor =  texture(totalMapTexture, texCoord).rgb;
+	blendMapColor = texture(blendMap, texCoord).rgb;
+	
+}

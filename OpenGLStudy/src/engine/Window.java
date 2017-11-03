@@ -65,13 +65,21 @@ public class Window {
 			public void invoke(long window, int key, int scancode, int action, int mods) {
 				// TODO Auto-generated method stub
 				if (key >= 0 && key < KeyboardInput.KEY_NUMBER) {
+					
 					KeyboardInput.beforeKeys[key] = KeyboardInput.keys[key];
+					
 					if (action == GLFW.GLFW_PRESS) {
 						KeyboardInput.keys[key] = true;
+						//System.out.println("PRESSED");
 					} else if (action == GLFW.GLFW_RELEASE) {
 						KeyboardInput.keys[key] = false;
+						//System.out.println("RELEASED");
+					} else if(action == GLFW.GLFW_REPEAT) {
+						KeyboardInput.keys[key] = true;
+						//System.out.println("REPEAT");
 					}
 				}
+				
 			}
 		};
 		GLFW.glfwSetKeyCallback(windowHandle, keyCallback);
@@ -120,6 +128,8 @@ public class Window {
 
 		// Set the clear color
 		GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		
+		
 	}
 
 	public void terminate() {

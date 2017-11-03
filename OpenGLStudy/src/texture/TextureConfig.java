@@ -56,6 +56,7 @@ public class TextureConfig {
 	}
 	
 	private static TextureConfig normalConfig;
+	private static TextureConfig heightMapConfig;
 	
 	public static TextureConfig getNormalTextureConfig(){
 		if(normalConfig == null){
@@ -72,5 +73,22 @@ public class TextureConfig {
 		}
 		
 		return normalConfig;
+	}
+	
+	public static TextureConfig getheightMapTextureConfig(){
+		if(heightMapConfig == null){
+			heightMapConfig = new TextureConfig();
+			heightMapConfig.setWrapS(GL11.GL_CLAMP);
+			heightMapConfig.setWrapT(GL11.GL_CLAMP);
+			
+			heightMapConfig.setUseMipMap(false);
+			heightMapConfig.setMinFilter(GL11.GL_LINEAR);
+			heightMapConfig.setMagFilter(GL11.GL_LINEAR);
+			
+			//normalConfig.setMinFilter(GL11.GL_LINEAR);
+			//normalConfig.setMaxFilter(GL11.GL_LINEAR);
+		}
+		
+		return heightMapConfig;
 	}
 }
