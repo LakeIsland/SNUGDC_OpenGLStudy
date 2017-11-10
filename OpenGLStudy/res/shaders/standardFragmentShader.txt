@@ -5,7 +5,13 @@ in vec2 passTexCoord;
 
 uniform sampler2D image;
 
+out vec4 out_Color;
+
 void main()
 {    
-    gl_FragColor = texture(image, passTexCoord);
+    vec4 color = texture(image, passTexCoord);
+    float alpha = color.a;
+	if(alpha < 0.3f)
+		discard;
+	out_Color = color;
 }

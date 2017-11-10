@@ -3,6 +3,7 @@ package game;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
@@ -13,10 +14,13 @@ import input.KeyboardInput;
 import models.Entity;
 import models.RawModel;
 import models.TexturedModel;
+import resourceLoader.OBJLoader;
 import standardRenderer.StandardRenderer;
+import terrain.MapConstants;
 import terrain.Terrain;
 import terrain.TerrainRenderer;
 import texture.Texture;
+import texture.TextureLoader;
 import util.Maths;
 
 public class Game implements IGameLogic {
@@ -61,11 +65,12 @@ public class Game implements IGameLogic {
 		normalTreeModel = new TexturedModel(normalTreeMesh, normalTreeTexture);
 		normaltrees = new ArrayList<Entity>();
 		
-		for(int i=0; i<100; i++){
+		for(int i=0; i<500; i++){
 			// TODO : add normal tree entity to the list. 
 			// ex) normaltrees.add(new Entity(model, position, rotX, rotY, rotZ, scale));
 			// IMPORTANT : set model y value from terrain height. -> use terrain.getExactHeight;
-			
+			// use random. Maths.getRandomFloat();
+			// mapsize = MapConstants.MAP_SIZE
 		}
 		
 	}
@@ -97,9 +102,17 @@ public class Game implements IGameLogic {
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glEnable(GL11.GL_CULL_FACE);
 		
-		// if you finish implementing normaltreelist then activate following comment.
-		//standardRenderer.render(normalTreeModel, normaltrees, Maths.getProjectionMatrix(window), Maths.getViewMatrix(camera));
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		
 		terrainTerrainRenderer.render(terrain, camera, Maths.getViewMatrix(camera), Maths.getProjectionMatrix(window));
+		
+		// if you finish implementing normaltreelist then activate following comment.
+		/*
+		GL11.glDisable(GL11.GL_CULL_FACE);
+		standardRenderer.render(normalTreeModel, normaltrees, Maths.getProjectionMatrix(window), Maths.getViewMatrix(camera));
+		GL11.glEnable(GL11.GL_CULL_FACE);
+		*/
 		
 		GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
 	}

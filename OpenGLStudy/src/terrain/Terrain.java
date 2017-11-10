@@ -156,12 +156,12 @@ public class Terrain {
 		float zCoord = scaledZ - gridZ;
 		float height;
 		
-		// TODO : calculate height using barycentric.
-		height = 1000;
-		
+		// TODO : calculate height.
+		// use barycentric.
+		height = 200;
+
 		return MapConstants.MAP_SCALE * height;
 		
 	}
-	
-	
+
 }
