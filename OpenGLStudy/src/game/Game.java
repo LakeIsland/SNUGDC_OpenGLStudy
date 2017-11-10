@@ -45,7 +45,7 @@ public class Game implements IGameLogic {
 		
 		//testEntity = new Entity(testModel, new Vector3f(0,0,100), 0, 0, 0, 2);
 		
-		terrain = new Terrain("MyIsland1");
+		terrain = new Terrain("Fjord");
 		terrainTerrainRenderer = new TerrainRenderer();
 		
 		

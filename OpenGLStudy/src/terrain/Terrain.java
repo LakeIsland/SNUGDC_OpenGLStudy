@@ -154,17 +154,12 @@ public class Terrain {
 		
 		float xCoord = scaledX - gridX;
 		float zCoord = scaledZ - gridZ;
-		float answer;
-
-		if (xCoord <= (1 - zCoord)) {
-			answer = xCoord * getHeight(gridX + 1, gridZ) + zCoord * getHeight(gridX, gridZ + 1)
-			+ (1 - xCoord - zCoord) * getHeight(gridX, gridZ);
-		} else {
-			answer = (1-xCoord) * getHeight(gridX, gridZ + 1) + (1-zCoord) * getHeight(gridX + 1, gridZ)
-			+ (-1 + xCoord + zCoord) * getHeight(gridX + 1, gridZ + 1);
-		}
-
-		return MapConstants.MAP_SCALE * answer;
+		float height;
+		
+		// TODO : calculate height using barycentric.
+		height = 1000;
+		
+		return MapConstants.MAP_SCALE * height;
 		
 	}
 	
