@@ -4,7 +4,7 @@
 layout (location = 0) in vec2 position;
 
 out vec2 texCoord;
-out float alphaBlendFactor;
+out float textureDistanceFactor;
 out vec3 totalMapColor;
 out vec3 blendMapColor;
 
@@ -37,7 +37,7 @@ void main(void){
 	
 	vec4 worldPos = vec4(pos.x * scale, height * heightScale * scale, pos.y * scale, 1.0);
 	
-	alphaBlendFactor = clamp(distance(worldPos.xyz, cameraPos)/(MAX_BLEND_DISTANCE), 0, 1);
+	textureDistanceFactor = clamp(distance(worldPos.xyz, cameraPos)/(MAX_BLEND_DISTANCE), 0, 1);
 	
 	gl_Position = projectionMatrix * viewMatrix  * worldPos;
 	

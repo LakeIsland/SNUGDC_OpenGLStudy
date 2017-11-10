@@ -71,23 +71,18 @@ public class Game implements IGameLogic {
 		
 		//testEntity = new Entity(testModel, new Vector3f(0,0,100), 0, 0, 0, 2);
 		
-		terrain = new Terrain("MyIsland1");
+		terrain = new Terrain("Fjord");
 		terrainTerrainRenderer = new TerrainRenderer();
 	}
 	
 	private boolean isLine = false;
-	private boolean isLineProcessed = false;
 	
 	@Override
 	public void processInput(Window window, float interval) {
 		camera.processInput(interval);
 		camera.mouseInput(window, interval);
-		
-		if(KeyboardInput.posEdge(GLFW.GLFW_KEY_6) && !isLineProcessed){
+		if(KeyboardInput.posEdge(GLFW.GLFW_KEY_6)){
 			isLine = !isLine;
-			isLineProcessed = true;
-		} else if(KeyboardInput.negEdge(GLFW.GLFW_KEY_6)) {
-			isLineProcessed = false;
 		}
 	}
 
@@ -96,6 +91,8 @@ public class Game implements IGameLogic {
 		// TODO Auto-generated method stub
 		//cubeData.update(interval);
 		terrain.updateLODLevel(camera);
+		camera.attachTerrain(terrain);
+		
 	}
 
 	@Override

@@ -2,7 +2,7 @@
 #define DETAIL_TILE_SIZE_COEFFICIENT 1200;
 
 in vec2 texCoord;
-in float alphaBlendFactor;
+in float textureDistanceFactor;
 in vec3 totalMapColor;
 in vec3 blendMapColor;
 
@@ -12,9 +12,14 @@ uniform sampler2D backgroundTexture;
 uniform sampler2D rTexture;
 uniform sampler2D gTexture;
 uniform sampler2D bTexture;
+uniform float useBlend;
 
 void main(void){
-	
+	if(useBlend < 0.5)
+	{
+		out_Color = vec4(totalMapColor, 1);
+		return;
+	}
 	float backTextureAmount = 1 - (blendMapColor.r + blendMapColor.g+ blendMapColor.b);
 	vec2 tiledCoords = texCoord * DETAIL_TILE_SIZE_COEFFICIENT;
 	
@@ -25,7 +30,7 @@ void main(void){
 	
 	vec3 totalBlendColor = backGroundTextureColor + rTextureColor + gTextureColor + bTextureColor;
 	
-	vec3 color = mix(totalBlendColor, totalMapColor, alphaBlendFactor);
+	vec3 color = mix(totalBlendColor, totalMapColor, textureDistanceFactor);
 	
 	out_Color = vec4(color, 1);
 }

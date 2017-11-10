@@ -1,6 +1,19 @@
 package terrain;
 
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.IntBuffer;
+import java.nio.ShortBuffer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import org.lwjgl.BufferUtils;
+import org.lwjgl.stb.STBImage;
+import org.lwjgl.system.MemoryUtil;
+
 import camera.Camera;
+import texture.TerrainTexture;
 import texture.Texture;
 import texture.TextureLoader;
 
@@ -11,12 +24,12 @@ public class Terrain {
 	private final Texture terrainTexture;
 	private final Texture terrainHeightMapTexture;
 	
-	
 	private final boolean hasBlendMap;
 	private Texture blendMap;
 	private TerrainTexturePackage terrainTexturePackage;
 	
 	private final GeoMipMapPatchMesh geoMipMapPatchMesh;
+	private final short[] rawHeightInfo;
 	
 	public Terrain(String terrainName){
 		
@@ -26,7 +39,37 @@ public class Terrain {
 		
 		geoMipMapPatchMesh = new GeoMipMapPatchMesh(MapConstants.MAP_BLOCK_SIZE, MapConstants.MAX_LOD_LEVEL);
 		terrainTexture = TextureLoader.getNormalRGBTexture(MapConstants.MAP_TEXTURE_FILE);
-		terrainHeightMapTexture = TextureLoader.getNormalGray16Texture(MapConstants.MAP_HEIGHT_FILE);
+		
+		rawHeightInfo = new short[ MapConstants.MAP_SIZE *  MapConstants.MAP_SIZE];
+		ShortBuffer sb = null;
+		
+		if(MapConstants.MAP_HEIGHT_FILE.endsWith(".png")){
+			IntBuffer w = BufferUtils.createIntBuffer(1);
+			IntBuffer h = BufferUtils.createIntBuffer(1);
+			IntBuffer comp = BufferUtils.createIntBuffer(1);
+			
+			sb = STBImage.stbi_load_16(MapConstants.MAP_HEIGHT_FILE, w, h, comp, 1);
+			
+		}
+		else if(MapConstants.MAP_HEIGHT_FILE.endsWith(".raw")){
+			byte[] binaryData = null;
+			try {
+				binaryData = Files.readAllBytes(Paths.get(MapConstants.MAP_HEIGHT_FILE));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			ByteBuffer byteBuffer = ByteBuffer.wrap(binaryData);
+			byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
+			sb = byteBuffer.asShortBuffer();
+		}
+		sb.get(rawHeightInfo);
+		
+		//sb.flip();
+		terrainHeightMapTexture = new TerrainTexture(MapConstants.MAP_SIZE, MapConstants.MAP_SIZE, rawHeightInfo);
+		MemoryUtil.memFree(sb);
+		
+		//terrainHeightMapTexture = TextureLoader.getNormalGray16Texture(MapConstants.MAP_HEIGHT_FILE);
 		
 		if(hasBlendMap){
 			blendMap = TextureLoader.getNormalRGBTexture(MapConstants.MAP_BLENDMAP);
@@ -82,6 +125,47 @@ public class Terrain {
 
 	public GeoMipMapPatchMesh getGeoMipMapPatchMesh() {
 		return geoMipMapPatchMesh;
+	}
+	
+	public float getHeight(int globalX, int globalY){
+		
+		if (globalX >= MapConstants.MAP_SIZE)
+			globalX = MapConstants.MAP_SIZE - 1;
+		if (globalX < 0)
+			globalX = 0;
+		if (globalY >= MapConstants.MAP_SIZE)
+			globalY = MapConstants.MAP_SIZE - 1;
+		if (globalY < 0)
+			globalY = 0;
+		
+		short i = rawHeightInfo[globalY * MapConstants.MAP_SIZE + globalX];
+		int t = Short.toUnsignedInt(i);
+		
+		return MapConstants.MAP_MIN_HEIGHT + MapConstants.MAP_INCREMENT_PER_BIT * t;
+		
+	}
+	
+	public float getExactHeight(float globalX, float globalY){
+		float scaledX = globalX / MapConstants.MAP_SCALE;
+		float scaledZ = globalY / MapConstants.MAP_SCALE;
+		
+		int gridX = (int)scaledX;
+		int gridZ = (int)scaledZ;
+		
+		float xCoord = scaledX - gridX;
+		float zCoord = scaledZ - gridZ;
+		float answer;
+
+		if (xCoord <= (1 - zCoord)) {
+			answer = xCoord * getHeight(gridX + 1, gridZ) + zCoord * getHeight(gridX, gridZ + 1)
+			+ (1 - xCoord - zCoord) * getHeight(gridX, gridZ);
+		} else {
+			answer = (1-xCoord) * getHeight(gridX, gridZ + 1) + (1-zCoord) * getHeight(gridX + 1, gridZ)
+			+ (-1 + xCoord + zCoord) * getHeight(gridX + 1, gridZ + 1);
+		}
+
+		return MapConstants.MAP_SCALE * answer;
+		
 	}
 	
 	

@@ -29,7 +29,7 @@ public class Maths {
 	public static Matrix4f getProjectionMatrix(Window window){
 		Matrix4f matrix = new Matrix4f();
 		matrix.identity();
-		matrix.perspective((float)Math.toRadians(45), window.getWidth() / (float)window.getHeight(), 1, 4000);
+		matrix.perspective((float)Math.toRadians(45), window.getWidth() / (float)window.getHeight(), 0.1f, 4000);
 		return matrix;
 	}
 	

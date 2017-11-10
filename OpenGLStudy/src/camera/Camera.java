@@ -6,6 +6,7 @@ import org.lwjgl.glfw.GLFW;
 import engine.Window;
 import input.KeyboardInput;
 import input.MouseInput;
+import terrain.Terrain;
 
 public class Camera {
 	private Vector3f position;
@@ -17,6 +18,9 @@ public class Camera {
 	private static final float SPEED = 10;
 	private static final float ROT_SPEED = 10;
 	private static final float MOUSE_SENSITIVITY = 0.2f;
+	private static final float EYE_HEIGHT = 1.5f;
+	
+	private boolean isFlying = false;
 	
 	public Camera(){
 		position = new Vector3f();
@@ -67,6 +71,18 @@ public class Camera {
 			pitch += rotAmount;
 		}if(KeyboardInput.isPressed(GLFW.GLFW_KEY_DOWN)){
 			pitch -= rotAmount;
+		}
+		
+		if(KeyboardInput.posEdge(GLFW.GLFW_KEY_5)){
+			isFlying = !isFlying;
+			System.out.println("CALLED");
+		}
+	}
+	
+	public void attachTerrain(Terrain terrain){
+		if(!isFlying){
+			float height = terrain.getExactHeight(position.x, position.z);
+			position.y = height + EYE_HEIGHT;
 		}
 	}
 	

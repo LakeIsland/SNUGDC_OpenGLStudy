@@ -66,13 +66,15 @@ public class Window {
 				// TODO Auto-generated method stub
 				if (key >= 0 && key < KeyboardInput.KEY_NUMBER) {
 					
-					KeyboardInput.beforeKeys[key] = KeyboardInput.keys[key];
+					//KeyboardInput.beforeKeys[key] = KeyboardInput.keys[key];
 					
 					if (action == GLFW.GLFW_PRESS) {
 						KeyboardInput.keys[key] = true;
+						KeyboardInput.pushProcessed[key] = false;
 						//System.out.println("PRESSED");
 					} else if (action == GLFW.GLFW_RELEASE) {
 						KeyboardInput.keys[key] = false;
+						KeyboardInput.releaseProcessed[key] = false;
 						//System.out.println("RELEASED");
 					} else if(action == GLFW.GLFW_REPEAT) {
 						KeyboardInput.keys[key] = true;
@@ -127,8 +129,7 @@ public class Window {
 		GL11.glViewport(0, 0, width, height);
 
 		// Set the clear color
-		GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-		
+		GL11.glClearColor(0.3f, 0.6f, 0.9f, 1.0f);
 		
 	}
 

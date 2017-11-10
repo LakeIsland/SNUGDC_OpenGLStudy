@@ -5,6 +5,7 @@ import camera.Camera;
 public class GeoMipMapPatch {
 	private static int MAP_BLOCK_SIZE = MapConstants.MAP_BLOCK_SIZE;
 	private static int MAX_LOD_LEVEL = MapConstants.MAX_LOD_LEVEL;
+	private static int MARGIN = 0;
 	
 	private int gridX, gridY;
 
@@ -20,6 +21,9 @@ public class GeoMipMapPatch {
 		
 		int dx = Math.abs((int)(camera.getPosition().x / MapConstants.MAP_SCALE - gridCenterX)/ MAP_BLOCK_SIZE);
 		int dy = Math.abs((int)(camera.getPosition().z / MapConstants.MAP_SCALE - gridCenterY) / MAP_BLOCK_SIZE);
+		
+		dx = Math.max(dx - MARGIN, 0);
+		dy = Math.max(dy - MARGIN, 0);
 		
 		int LOD = Math.min(MAX_LOD_LEVEL, Math.max(dx, dy));
 		

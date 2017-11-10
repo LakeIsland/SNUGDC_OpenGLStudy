@@ -75,18 +75,27 @@ public class MapConstants {
 			MAP_INCREMENT_PER_BIT = MAP_HEIGHT_RANGE / (1 << BYTE_NUMBER);
 			
 			if(HAS_BLEND_MAP){
-				Element diffuseEle = (Element)mapEle.getElementsByTagName("diffuse").item(0);
-				Element normalEle = (Element)mapEle.getElementsByTagName("normal").item(0);
-				
-				MAP_BACKGROUND_TEXTURE = MAP_TILE_FOLDER + getString(diffuseEle, "background");
-				MAP_RED_TEXTURE = MAP_TILE_FOLDER + getString(diffuseEle, "red");
-				MAP_GREEN_TEXTURE = MAP_TILE_FOLDER + getString(diffuseEle, "green");
-				MAP_BLUE_TEXTURE = MAP_TILE_FOLDER + getString(diffuseEle, "blue");
-				
-				MAP_BACKGROUND_NORMAL_TEXTURE = MAP_TILE_FOLDER + (getString(normalEle, "background"));
-				MAP_RED_NORMAL_TEXTURE = MAP_TILE_FOLDER + (getString(normalEle, "red"));
-				MAP_GREEN_NORMAL_TEXTURE = MAP_TILE_FOLDER + (getString(normalEle, "green"));
-				MAP_BLUE_NORMAL_TEXTURE = MAP_TILE_FOLDER + (getString(normalEle, "blue"));
+				try{
+					Element diffuseEle = (Element)mapEle.getElementsByTagName("diffuse").item(0);
+					MAP_BACKGROUND_TEXTURE = MAP_TILE_FOLDER + getString(diffuseEle, "background");
+					MAP_RED_TEXTURE = MAP_TILE_FOLDER + getString(diffuseEle, "red");
+					MAP_GREEN_TEXTURE = MAP_TILE_FOLDER + getString(diffuseEle, "green");
+					MAP_BLUE_TEXTURE = MAP_TILE_FOLDER + getString(diffuseEle, "blue");
+					
+				} catch(Exception e){
+					e.printStackTrace();
+				} try{
+					Element normalEle = (Element)mapEle.getElementsByTagName("normal").item(0);
+					if(normalEle != null){
+						MAP_BACKGROUND_NORMAL_TEXTURE = MAP_TILE_FOLDER + (getString(normalEle, "background"));
+						MAP_RED_NORMAL_TEXTURE = MAP_TILE_FOLDER + (getString(normalEle, "red"));
+						MAP_GREEN_NORMAL_TEXTURE = MAP_TILE_FOLDER + (getString(normalEle, "green"));
+						MAP_BLUE_NORMAL_TEXTURE = MAP_TILE_FOLDER + (getString(normalEle, "blue"));
+					}
+					
+				} catch(Exception e){
+					e.printStackTrace();
+				}
 				
 				MAP_BLENDMAP = mapFolder + "blendMap.png";
 			}

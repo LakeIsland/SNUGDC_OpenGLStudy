@@ -49,8 +49,9 @@ public class TerrainRenderer {
 
 		shader.setMatrix4f("projectionMatrix", projectionMatrix);
 		shader.setMatrix4f("viewMatrix", viewMatrix);
-		
 		shader.setVector3f("cameraPos", camera.getPosition());
+		shader.setBoolean("useBlend", MapConstants.HAS_BLEND_MAP);
+		
 		prepareTerrainTexture(terrain);
 		
 		GeoMipMapPatchMesh patchMesh = terrain.getGeoMipMapPatchMesh();

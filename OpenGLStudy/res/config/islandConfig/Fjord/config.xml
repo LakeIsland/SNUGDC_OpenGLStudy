@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<map xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<size>1024</size>
+	<name>Fjord Tutorial</name>
+	<minHeight>-19.282</minHeight>
+	<maxHeight>154.0</maxHeight>
+	<heightMap>HeightMap.raw</heightMap>
+	<textureMap>Fjord_TX.jpg</textureMap>
+	<hasBlendMap>true</hasBlendMap>
+	<diffuse>
+		<background>grass1.jpg</background>
+		<red>snow.jpg</red>
+		<green>rock1.jpg</green>
+		<blue>sand.jpg</blue>
+	</diffuse>
+</map>

@@ -4,7 +4,7 @@
 	<name>Baker Island</name>
 	<minHeight>-7</minHeight>
 	<maxHeight>200</maxHeight>
-	<heightMap>heightMap.png</heightMap>
+	<heightMap>Height.raw</heightMap>
 	<textureMap>TotalTexture.png</textureMap>
 	<hasBlendMap>true</hasBlendMap>
 	<diffuse>

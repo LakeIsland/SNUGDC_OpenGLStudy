@@ -14,6 +14,10 @@ public class Texture {
 	private int height;
 	private int id;
 	
+	protected Texture(){
+		
+	}
+	
 	public Texture(String path, int format, TextureConfig config){
 		loadTextureFromPath(path, format);
 		createMipMap(config.isUseMipMap());
@@ -61,7 +65,7 @@ public class Texture {
 		
 	}
 	
-	private void setParameter(TextureConfig config){
+	protected void setParameter(TextureConfig config){
 		setParameter(GL11.GL_TEXTURE_WRAP_S, config.getWrapS());
 		setParameter(GL11.GL_TEXTURE_WRAP_T, config.getWrapT());
 		setParameter(GL11.GL_TEXTURE_MIN_FILTER, config.getMinFilter());
