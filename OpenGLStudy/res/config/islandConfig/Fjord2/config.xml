@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<map xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<size>1024</size>
+	<name>Fjord2</name>
+	<minHeight>-23.341</minHeight>
+	<maxHeight>116.8</maxHeight>
+	<heightMap>HeightMap.png</heightMap>
+	<textureMap>Fjord2_TX.jpg</textureMap>
+	<hasBlendMap>true</hasBlendMap>
+	<diffuse>
+		<background>grass1.jpg</background>
+		<red>snow.jpg</red>
+		<green>sand.jpg</green>
+		<blue>rock1.jpg</blue>
+	</diffuse>
+</map>
