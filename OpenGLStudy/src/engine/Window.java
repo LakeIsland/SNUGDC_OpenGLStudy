@@ -129,7 +129,7 @@ public class Window {
 		GL11.glViewport(0, 0, width, height);
 
 		// Set the clear color
-		GL11.glClearColor(0.3f, 0.6f, 0.9f, 1.0f);
+		GL11.glClearColor(0, 0, 0, 0);
 		
 	}
 
@@ -207,11 +207,11 @@ public class Window {
 		if(KeyboardInput.posEdge(GLFW.GLFW_KEY_ESCAPE)){
 			GLFW.glfwSetWindowShouldClose(windowHandle, true);
 		}
-		if(KeyboardInput.posEdge(GLFW.GLFW_KEY_9)){
+		if(KeyboardInput.posEdge(GLFW.GLFW_KEY_F9)){
 			vSync = !vSync;
 			updatevSync();
 		}
-		if(KeyboardInput.posEdge(GLFW.GLFW_KEY_0)){
+		if(KeyboardInput.posEdge(GLFW.GLFW_KEY_F10)){
 			isWindowed = !isWindowed;
 			updateScreenWindowFull();
 		}

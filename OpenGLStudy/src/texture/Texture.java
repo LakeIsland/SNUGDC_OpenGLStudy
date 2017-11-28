@@ -10,9 +10,9 @@ import org.lwjgl.opengl.GL31;
 import org.lwjgl.stb.STBImage;
 
 public class Texture {
-	private int width;
-	private int height;
-	private int id;
+	protected int width;
+	protected int height;
+	protected int id;
 	
 	protected Texture(){
 		

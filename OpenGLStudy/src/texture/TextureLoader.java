@@ -14,4 +14,6 @@ public class TextureLoader {
 		return new Texture(path, TextureFormat.GRAY_16, TextureConfig.getheightMapTextureConfig());
 	}
 	
+	
+	
 }

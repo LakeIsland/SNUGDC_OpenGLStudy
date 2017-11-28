@@ -158,7 +158,14 @@ public class Terrain {
 		
 		// TODO : calculate height.
 		// use barycentric.
-		height = 200;
+		
+		if (xCoord <= (1 - zCoord)) {
+			height = xCoord * getHeight(gridX + 1, gridZ) + zCoord * getHeight(gridX, gridZ + 1)
+			+ (1 - xCoord - zCoord) * getHeight(gridX, gridZ);
+		} else {
+			height = (1-xCoord) * getHeight(gridX, gridZ + 1) + (1-zCoord) * getHeight(gridX + 1, gridZ)
+			+ (-1 + xCoord + zCoord) * getHeight(gridX + 1, gridZ + 1);
+		}
 
 		return MapConstants.MAP_SCALE * height;
 		

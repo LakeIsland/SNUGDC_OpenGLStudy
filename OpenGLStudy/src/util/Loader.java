@@ -85,6 +85,18 @@ public class Loader {
 		return vaoID;
 	}
 	
+	public static RawModel loadRawModelWithPos(float[] positions, int size) {
+		// VAO 만들기
+		int vaoID = GL30.glGenVertexArrays();
+		GL30.glBindVertexArray(vaoID);
+		
+		storeDataInAttributeList(0, size, positions);
+
+		// unbind.
+		GL30.glBindVertexArray(0);
+		return new RawModel(vaoID, positions.length);
+	}
+	
 	public static RawModel loadPosTex(float[] positions,float[] textureCoords, int[] indices) {
 		// VAO 만들기
 		int vaoID = GL30.glGenVertexArrays();

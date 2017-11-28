@@ -11,7 +11,7 @@ void main()
 {    
     vec4 color = texture(image, passTexCoord);
     float alpha = color.a;
-	if(alpha < 0.3f)
+	if(alpha < 0.5f)
 		discard;
 	out_Color = color;
 }
